@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Paquetes y Clientes - Servientrega</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+	        body {
+	            font-family: Arial, sans-serif;
+	            background-image: url('https://paseosanrafael.com/wp-content/uploads/2014/01/ServientregaLogo.jpg');
+	            background-size: cover;
+	            background-repeat: no-repeat;
+	            margin: 0;
+	            padding: 20px;
+	        }
+	        h1, h2 {
+	            color: #000;
+	            text-align: center;
+	            margin-bottom: 20px;
+	        }
+	        table {
+	            width: 100%;
+	            border-collapse: collapse;
+	            margin-bottom: 20px;
+	            overflow-x: auto;
+	        }
+	        th, td {
+	            padding: 10px;
+	            text-align: center;
+	            border: 1px solid #dee2e6;
+	            white-space: nowrap;
+	            color: #000;
+	        }
+	        th {
+	            background-color: rgba(0, 123, 255, 0.7);
+	        }
+	        td {
+	            background-color: rgba(233, 236, 239, 0.7);
+	        }
+	        .btn {
+	            padding: 10px 20px;
+	            background-color: rgb(255, 128, 0);
+	            color: #000;
+	            text-decoration: none;
+	            border-radius: 4px;
+	            transition: background-color 0.3s;
+	            cursor: pointer;
+	        }
+	        .btn:hover {
+	            background-color: rgb(255, 128, 0);
+	        }
+	    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Gestión de Paquetes y Clientes</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Paquetes</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Destino</th>
+                        <th>Contenido</th>
+                        <th>Cliente ID</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="paquete : ${paquetes}">
+                        <td th:text="${paquete.id}">1</td>
+                        <td th:text="${paquete.destino}">Destino</td>
+                        <td th:text="${paquete.contenido}">Contenido</td>
+                        <td th:text="${paquete.clienteId}">Cliente ID</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" th:onclick="'editarPaquete(' + ${paquete.id} + ')'">Editar</button>
+                            <button class="btn btn-danger btn-sm" th:onclick="'eliminarPaquete(' + ${paquete.id} + ')'">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-success btn-block" onclick="crearPaquete()">Crear Paquete</button>
+        </div>
+        <div class="col-md-6">
+            <h2>Clientes</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td th:text="${cliente.id}">1</td>
+                        <td th:text="${cliente.nombre}">Nombre</td>
+                        <td th:text="${cliente.direccion}">Dirección</td>
+                        <td th:text="${cliente.telefono}">Teléfono</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" th:onclick="'editarCliente(' + ${cliente.id} + ')'">Editar</button>
+                            <button class="btn btn-danger btn-sm" th:onclick="'eliminarCliente(' + ${cliente.id} + ')'">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-success btn-block" onclick="crearCliente()">Crear Cliente</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function crearPaquete() {
+    window.location.href = '/paquetes/form';
+}
+
+function editarPaquete(id) {
+    window.location.href = '/paquetes/form/' + id;
+}
+
+function eliminarPaquete(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este paquete?')) {
+        fetch('/paquetes/' + id, { method: 'DELETE' }).then(() => {
+            window.location.reload();
+        });
+    }
+}
+
+function crearCliente() {
+    window.location.href = '/clientes/form';
+}
+
+function editarCliente(id) {
+    window.location.href = '/clientes/form/' + id;
+}
+
+function eliminarCliente(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+        fetch('/clientes/' + id, { method: 'DELETE' }).then(() => {
+            window.location.reload();
+        });
+    }
+}
+</script>
+</body>
+</html>

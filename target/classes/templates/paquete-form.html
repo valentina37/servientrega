@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Paquete</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		       body {
+		           font-family: Arial, sans-serif;
+		           background-color: #f8f9fa;
+		           background-image: url('https://enviosycompras.com/wp-content/uploads/2021/11/paquete-casa-1024x683.jpg');
+		           background-size: cover;
+		           background-position: center;
+		           background-repeat: no-repeat;
+		       }
+		       .container {
+		           max-width: 500px;
+		           margin: 50px auto;
+		           padding: 20px;
+		           background-color: rgba(255, 255, 255, 0.8);
+		           border-radius: 8px;
+		           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		       }
+		       h1 {
+		           text-align: center;
+		           margin-bottom: 30px;
+		           color: #333;
+		       }
+		       .form-group {
+		           margin-bottom: 20px;
+		       }
+		       label {
+		           font-weight: bold;
+		       }
+		   </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 th:text="${paquete.id == null ? 'Crear Paquete' : 'Editar Paquete'}"></h1>
+        <form th:action="@{/paquetes}" th:object="${paquete}" method="post">
+            <div class="form-group">
+                <label for="destino">Destino</label>
+                <input type="text" id="destino" th:field="*{destino}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="contenido">Contenido</label>
+                <input type="text" id="contenido" th:field="*{contenido}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="clienteId">Cliente ID</label>
+                <input type="number" id="clienteId" th:field="*{clienteId}" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
+    </div>
+</body>
+</html>
